@@ -1,0 +1,109 @@
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Header */
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-link.light {
+  color: #000;
+}
+
+.nav-link.dark {
+  color: #fff;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sun-icon,
+.moon-icon {
+  font-size: 24px;
+}
+
+.sun-icon {
+  color: #ffcc00;
+}
+
+.moon-icon {
+  color: #90caf9;
+}
+
+.theme-switch .MuiSwitch-thumb {
+  background-color: #fff !important;
+}
+
+/* Todo Form */
+.todo-form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 40px;
+  gap: 16px;
+}
+
+.todo-input {
+  width: 500px;
+}
+
+.add-button {
+  height: 56px;
+  align-self: flex-start;
+}
+.add-button:disabled {
+  background-color: #ea4b4b !important ;
+  cursor: not-allowed;
+}
+
+/* Todo List */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.todo-item {
+  width: 500px !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button.dark {
+  color: #f44336;
+}
+
+.delete-button.light {
+  color: #000;
+}
+
+.delete-button:hover {
+  color: #d32f2f;
+}

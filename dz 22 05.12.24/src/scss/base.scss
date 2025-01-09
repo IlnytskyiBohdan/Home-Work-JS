@@ -1,0 +1,14 @@
+$bg: #f0f8ff;
+$bg-widget: #ffffff;
+$border: #ddd;
+$button-hover: #00aaff;
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: $bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}

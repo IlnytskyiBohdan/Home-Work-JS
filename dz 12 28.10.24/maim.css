@@ -1,0 +1,15 @@
+body {
+  text-align: center;
+}
+
+button {
+  padding: 5px;
+}
+
+.block {
+  padding: 50px 0;
+}
+
+ul {
+  list-style-position: inside;
+}

@@ -1,0 +1,12 @@
+.app-container {
+    text-align: center;
+  }
+  
+  .app-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+      margin-top: 10px;
+    }

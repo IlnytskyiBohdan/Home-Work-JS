@@ -1,0 +1,12 @@
+.results-container {
+    margin-top: 20px;
+  }
+  
+  .winner-emoji {
+    font-size: 50px;
+  }
+  
+  .results-title {
+    font-size: 24px;
+    font-weight: bold;
+  }

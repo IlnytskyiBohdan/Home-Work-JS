@@ -1,0 +1,25 @@
+.button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+}
+
+.button-result {
+    background-color: #4caf50;
+}
+
+.button-result:hover {
+  background-color: #45a049;
+}
+
+.button-clear {
+    background-color: #f90606;
+}
+
+.button-clear:hover {
+  background-color: #e73d3d;
+}

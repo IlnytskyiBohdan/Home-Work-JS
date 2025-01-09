@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main {
+  padding: 10px;
+}
+.header {
+  padding: 10px;
+  display: flex;
+  border-bottom: 1px solid #1976d2 ;
+  justify-content: center;
+}
+.content {
+  height: 100vh;
+  text-align: center;
+}
+.logo {
+  padding-right: 30px;
+}
+
+.header_pages {
+  display: flex;
+  list-style: none;
+}
+.header_pages li {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.day-color {
+  color: black;
+}
+.day-background {
+  background-color: white;
+}
+
+.night-color {
+  color: white;
+}
+.night-background {
+  background-color: black;
+}
+
+.todo-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.todo-input {
+  width: 300px;
+}
+
+.todo-button {
+  height: 56px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+.button-delete {
+  color: red !important;
+}
+
+.todo-list h1 {
+  padding: 20px;
+}
+
+.todo-list li {
+  padding: 10px;
+}
+
+.todo-input,
+.todo-input .MuiOutlinedInput-root,
+.todo-input .MuiOutlinedInput-notchedOutline,
+.todo-input:hover .MuiOutlinedInput-notchedOutline,
+.todo-input .MuiInputLabel-root,
+.todo-input .MuiInputBase-input {
+  border-color: #1976d2 !important;
+  color: #1976d2 !important;
+}
+
+.css-1btmbba-MuiButtonBase-root-MuiButton-root.Mui-disabled {
+  color: red !important;
+}

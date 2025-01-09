@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Widget</title>
+  </head>
+  <body>
+    <div class="weather-widget">
+      <div class="weather-info lc">
+        <p id="date">Loading...</p>
+        <p id="time">Time: --:--</p>
+        <p id="humidity">Humidity: --%</p>
+        <p id="pressure">Pressure: -- hPa</p>
+        <p id="wind">Wind: -- km/h</p>
+      </div>
+      <div class="weather-info rc">
+        <p id="temperature">-- °C</p>
+        <p id="temperature-feels-like">Feels like: -- °C</p>
+        <p id="description">--</p>
+        <div class="update">
+          <p id="date-update"></p>
+          <p id="time-update">--:--</p>
+          
+          <button id="refresh-button" title="Refresh">
+            <i class="fa fa-sync-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+body {
+  text-align: center;
+}
+
+#table-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+table {
+  border-collapse: collapse;
+  margin: 20px auto;
+}
+td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+#textBlock {
+  font-size: 24px;
+}
+
+.originalColor {
+  color: black;
+}
+
+.newColor {
+  color: red;
+}
+
+button {
+  margin: 20px 0;
+}
+
+img {
+  height: 200px;
+}
