@@ -39,7 +39,3 @@ export const getSwapi = (text) => async (dispatch) => {
     console.error(e);
   }
 };
-
-export const clearSwapi = () => (dispatch) => {
-  dispatch(deleteSwapi());
-};

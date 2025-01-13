@@ -1,11 +1,11 @@
-import { clearSwapi } from "../../redux/slice/slice";
+import { deleteSwapi } from "../../redux/slice/slice";
 import { useDispatch } from "react-redux";
 
 const ButtonClear = () => {
   const dispatch = useDispatch();
   const hendleDelete = () => {
 
-    dispatch(clearSwapi());
+    dispatch(deleteSwapi());
   };
   return (
     <button
