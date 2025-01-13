@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import API from "../../redux/constants/constants";
+import API from "../constants/constants";
 
 const initialState = {
   todos: [],
@@ -34,15 +34,10 @@ export const todoSlice = createSlice({
       const todo = state.todos.find((todo) => todo.id === action.payload.id);
       todo.completed = action.payload.completed;
     },
+
     updateTodo: (state, action) => {
       const todo = state.todos.find((todo) => todo.id === action.payload.id);
-      if (todo) {
-        todo.text = action.payload.text; // Обновляем текст, если задача найдена
-      } else {
-        console.error("Задача для обновления не найдена:", action.payload.id);
-      }
-      console.log("Текущий список задач:", state.todos);
-      console.log("Ищем задачу с id:", action.payload.id);
+      todo.text = action.payload.text;
     },
   },
 });
@@ -91,8 +86,6 @@ export const clearTodos = () => async (dispatch, getState) => {
   try {
     const state = getState();
     const todos = state.todo.todos;
-
-    // Удаляем задачи по одной
     for (const todo of todos) {
       await fetch(`${API}/${todo.id}`, {
         method: "DELETE",
@@ -136,6 +129,6 @@ export const editTodo =
       const updatedTodo = await response.json();
       dispatch(updateTodo({ id: updatedTodo.id, text: updatedTodo.text }));
     } catch (e) {
-      console.error("Ошибка при редактировании задачи:", e);
+      console.error(e);
     }
   };

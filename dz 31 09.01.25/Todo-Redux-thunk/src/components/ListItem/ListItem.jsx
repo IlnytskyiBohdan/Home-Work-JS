@@ -17,7 +17,7 @@ const ListItems = ({ text, id, completed, onEdit }) => {
   };
 
   const handleTextClick = () => {
-    onEdit(id, text); // Передаем ID и текст в `TodoList`
+    onEdit(id, text);
   };
 
   return (

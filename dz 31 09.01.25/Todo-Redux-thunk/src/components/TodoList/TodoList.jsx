@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addTodo, getTodo, clearTodos, editTodo } from "../../Redux/slice/todoSlice";
 import ListItems from "../ListItem/ListItem";
-import { selectTodos, isLoading  } from "../../redux/selectors/selectors";
+import { selectTodos, isLoading } from "../../redux/selectors/selectors";
 
 const TodoList = () => {
   const [text, setText] = useState("");
@@ -19,7 +19,7 @@ const TodoList = () => {
   const handleAddTodo = async () => {
     if (text.trim()) {
       if (editId) {
-        dispatch(editTodo({ id: editId, text })); 
+        dispatch(editTodo({ id: editId, text }));
         setEditId(null);
       } else {
         dispatch(addTodo(text));
