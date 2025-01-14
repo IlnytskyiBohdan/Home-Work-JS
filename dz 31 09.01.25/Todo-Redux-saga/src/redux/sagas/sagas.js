@@ -51,16 +51,15 @@ function* addTodoSaga(action) {
 
 function* clearTodosSaga() {
   try {
-
     const todos = yield select((state) => state.todo.todos);
 
     for (const todo of todos) {
       yield call(fetchHelper, `${API}/${todo.id}`, { method: "DELETE" });
     }
-    
+
     yield put(deleteItem());
   } catch (e) {
-    console.error("Ошибка при удалении задач:", e);
+    console.error(e);
   }
 }
 
