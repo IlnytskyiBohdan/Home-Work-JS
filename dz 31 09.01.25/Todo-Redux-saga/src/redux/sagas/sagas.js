@@ -1,6 +1,21 @@
 import { all, takeEvery, call, put, select } from "redux-saga/effects";
 import API from "../constants/constants";
-import { setTodos, fetchStart, deleteTodo, deleteItem, addTodo, addItem, clearAll } from "../slice/todoSlice";
+import {
+  setTodos,
+  fetchStart,
+  deleteTodo,
+  deleteItem,
+  addTodo,
+  addItem,
+  clearAll,
+  clearAllTodo,
+  toggleCompleteTodo,
+  toggleComplete,
+  editTodoStart,
+  editTodo,
+} from "../slice/todoSlice";
+
+// Helper
 
 function fetchHelper(url, options) {
   return fetch(url, options).then((response) => {
@@ -12,12 +27,12 @@ function fetchHelper(url, options) {
 }
 
 // Workers
-// .map((todo) => ({ ...todo, completed: todo.completed || false }))
+
 function* fetchItemsSaga() {
   try {
     const todos = yield call(fetchHelper, API);
 
-    yield put(setTodos(todos));
+    yield put(setTodos(todos.map((todo) => ({ ...todo, completed: todo.completed || false }))));
   } catch (e) {
     console.error(e);
   }
@@ -57,7 +72,38 @@ function* clearTodosSaga() {
       yield call(fetchHelper, `${API}/${todo.id}`, { method: "DELETE" });
     }
 
-    yield put(deleteItem());
+    yield put(clearAllTodo());
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* toggleCompleteTodoSaga(action) {
+  try {
+    const { id, completed } = action.payload;
+
+    yield call(fetchHelper, `${API}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed }),
+    });
+
+    yield put(toggleComplete({ id, completed }));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* editTodoSaga(action) {
+  try {
+    const { id, text } = action.payload;
+
+    const updatedTodo = yield call(fetchHelper, `${API}/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    yield put(editTodo({ id: updatedTodo.id, text: updatedTodo.text }));
   } catch (e) {
     console.error(e);
   }
@@ -80,6 +126,14 @@ function* watchClearAllTods() {
   yield takeEvery(clearAll.type, clearTodosSaga);
 }
 
+function* watchToggleComplete() {
+  yield takeEvery(toggleCompleteTodo.type, toggleCompleteTodoSaga);
+}
+
+function* watchEditTodo() {
+  yield takeEvery(editTodoStart.type, editTodoSaga);
+}
+
 export default function* rootSaga() {
-  yield all([watchFetchTodos(), watchDeleteTodo(), watchAddTodo(), watchClearAllTods()]);
+  yield all([watchFetchTodos(), watchDeleteTodo(), watchAddTodo(), watchClearAllTods(), watchToggleComplete(), watchEditTodo()]);
 }

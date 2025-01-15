@@ -13,7 +13,7 @@ const ListItems = ({ text, id, completed, onEdit }) => {
   };
 
   const handleToggle = () => {
-    dispatch(toggleCompleteTodo(id));
+    dispatch(toggleCompleteTodo({ id, completed: !completed }));
   };
 
   const handleTextClick = () => {
@@ -23,7 +23,7 @@ const ListItems = ({ text, id, completed, onEdit }) => {
   return (
     <ListItem className="todo-item">
       <Checkbox
-        checked={completed}
+        checked={!!completed}
         onChange={handleToggle}
       />
       <ListItemText

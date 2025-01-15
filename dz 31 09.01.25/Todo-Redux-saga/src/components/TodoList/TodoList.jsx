@@ -1,7 +1,7 @@
 import { TextField, Button, List } from "@mui/material";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addTodo, clearAll, editTodo, fetchStart } from "../../Redux/slice/todoSlice";
+import { addTodo, clearAll, editTodoStart, fetchStart } from "../../Redux/slice/todoSlice";
 import ListItems from "../ListItem/ListItem";
 import { selectTodos, isLoading } from "../../redux/selectors/selectors";
 
@@ -19,7 +19,7 @@ const TodoList = () => {
   const handleAddTodo = async () => {
     if (text.trim()) {
       if (editId) {
-        dispatch(editTodo({ id: editId, text }));
+        dispatch(editTodoStart({ id: editId, text }));
         setEditId(null);
       } else {
         dispatch(addTodo(text));
