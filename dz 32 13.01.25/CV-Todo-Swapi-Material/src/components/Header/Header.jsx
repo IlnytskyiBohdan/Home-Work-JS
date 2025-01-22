@@ -18,8 +18,8 @@ const Header = () => {
           sx={{ display: "flex", gap: 2 }}
         >
           <Link to="/About-me">About me</Link>
-          <Link to="/">Todo List</Link>
-          <Link to="/Contact">Swapi</Link>
+          <Link to="/Todo">Todo List</Link>
+          <Link to="/Swapi">Swapi</Link>
         </Box>
       </Toolbar>
     </AppBar>

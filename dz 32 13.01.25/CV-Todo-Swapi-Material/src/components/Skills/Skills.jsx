@@ -1,0 +1,25 @@
+const skills = [
+  "HTML5",
+  "CSS3",
+  "JavaScript",
+  "DOM",
+  "React",
+  "jQuery",
+  "SCSS/SASS",
+  "TailwindCSS",
+  "Bootstrap",
+  "Webpack",
+  "Gulp",
+  "Vite",
+  "Node.js",
+  "Express.js",
+  "MongoDB",
+  "REST API",
+  "Fetch",
+  "SQL",
+  "NoSQL",
+  "GIT",
+  "GitHub",
+];
+
+export default skills;

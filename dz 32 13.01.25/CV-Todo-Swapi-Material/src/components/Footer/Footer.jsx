@@ -23,7 +23,7 @@ const Footer = () => {
 
         <Box sx={{ display: "flex", gap: 5, justifyContent: "center" }}>
           <Link to="mailto:neklz1@icloud.com">Email: neklz1@icloud.com</Link>
-          <Link to="tel:+380966322331">Tel: +380966322331</Link>
+          <Link to="tel:+380966322331">Tel: +380 96 632 23 31</Link>
           <Typography
             component="a"
             href="https://www.linkedin.com/in/bohdan-ilnytskyi-13155b335/"

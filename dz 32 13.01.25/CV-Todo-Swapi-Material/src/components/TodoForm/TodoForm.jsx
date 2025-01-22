@@ -18,7 +18,7 @@ const TodoForm = ({ addTodo }) => {
     >
       {({ isSubmitting, isValid, touched, errors }) => (
         <Form>
-          <Box sx={{ display: "flex", gap: 2, maxWidth: 600, mx: "auto" }}>
+          <Box sx={{ display: "flex", gap: 1, maxWidth: 600, mx: "auto" }}>
             <Field
               as={TextField}
               name="todo"
@@ -32,7 +32,7 @@ const TodoForm = ({ addTodo }) => {
               variant="contained"
               type="submit"
               disabled={isSubmitting || !isValid}
-              sx={{ alignSelf: "center", width: "30%" }}
+              sx={{ alignSelf: "center", width: "25%" }}
             >
               Add task
             </Button>
