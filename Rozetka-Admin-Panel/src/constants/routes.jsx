@@ -1,6 +1,6 @@
-import Login from "@pages/Login";
-import ProductsPrevie from "@pages/ProductsPrevie";
-import ProductsTable from "@pages/ProductsTable";
+import Login from "../pages/Login/";
+import ProductsPrevie from "../pages/ProductsPrevie";
+import ProductsTable from "../pages/ProductsTable";
 
 export const routes = {
   login: {

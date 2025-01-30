@@ -1,9 +1,9 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { routes } from "@constants/routes";
+import { routes } from "./constants/routes";
 import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
-import Layout from "@components/Layout/Layout";
-import NoteFound from "@components/NoteFound/NoteFound";
+import Layout from "./components/Layout/Layout";
+import NoteFound from "./components/NoteFound/NoteFound";
 
 function App() {
   return (
