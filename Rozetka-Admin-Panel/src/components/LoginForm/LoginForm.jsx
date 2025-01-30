@@ -1,8 +1,19 @@
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/slices/sliceUser";
 import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Container,
+  Paper,
+  Box,
+  CircularProgress,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
-import axios from "axios";
-import { TextField, Button, Container, Paper, Box, Alert } from "@mui/material";
 
 const LoginForm = () => {
   const {
@@ -10,83 +21,79 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [loginError, setLoginError] = useState("");
+  const { loading, error } = useSelector((state) => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const onSubmit = async (data) => {
-    try {
-      const response = await axios.get("http://localhost:3000/users");
-      const users = response.data;
-
-      const user = users.find(
-        (user) => user.username === data.username && user.password === data.password
-      );
-
-      if (user) {
-        console.log("Login successful:", user);
-        navigate("/products-table");
-      } else {
-        setLoginError("Invalid user name or password");
-      }
-    } catch (error) {
-      console.error("Error fetching users:", error);
-      setLoginError("Server error. Try again later.");
+    const result = await dispatch(loginUser(data));
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/products-table");
     }
   };
 
   return (
     <Container
-      sx={{
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        maxWidth: "750px",
-      }}>
-      <Paper elevation={20} sx={{ padding: 3, textAlign: "center" }}>
-        <Box sx={{ padding: "40px" }}>
-          <Box component='img' src='/logoForm.svg' alt='Logo' />
-          {loginError && <Alert severity='error'>{loginError}</Alert>}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField
-              fullWidth
-              label='User Name'
-              variant='outlined'
-              margin='normal'
-              {...register("username", { required: "User Name is required" })}
-              error={!!errors.username}
-              helperText={errors.username?.message}
-            />
-            <TextField
-              fullWidth
-              label='Password'
-              type='password'
-              variant='outlined'
-              margin='normal'
-              {...register("password", { required: "Password is required" })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
-            <Button
-              fullWidth
-              type='submit'
-              variant='contained'
-              sx={{
-                mt: 4,
-                background: "green",
-                fontSize: "30px",
-                textTransform: "none",
-                fontFamily: "Inter",
-                fontSize: "24px",
-                fontWeight: "600",
-              }}>
-              Login
-            </Button>
-          </form>
-        </Box>
+      sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <Paper sx={{ padding: 4, borderRadius: 3, textAlign: "center", width: 400 }}>
+        <Box component='img' src='/logoForm.svg' alt='Logo' sx={{ mb: 8 }} />
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField
+            fullWidth
+            label='User Name'
+            {...register("userName", { required: "User Name is required" })}
+            error={!!errors.userName}
+            helperText={errors.userName?.message}
+            sx={{ mb: 5 }}
+          />
+          <TextField
+            fullWidth
+            label='Password'
+            type={showPassword ? "text" : "password"}
+            {...register("password", { required: "Password is required" })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            sx={{ mb: 8 }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <IconButton onClick={handleTogglePassword} edge='end'>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {error && <Box sx={{ color: "red", mb: 2 }}>{error}</Box>}
+          <Button
+            fullWidth
+            type='submit'
+            variant='contained'
+            color='success'
+            disabled={loading}
+            sx={{
+              mt: 3,
+              mb: 3,
+              fontSize: "20px",
+              fontWeight: "600",
+              padding: "12px",
+              borderRadius: "6px",
+              textTransform: "none",
+            }}>
+            {loading ? <CircularProgress size={24} color='success' /> : "Login"}
+          </Button>
+        </form>
       </Paper>
     </Container>
   );
 };
 
 export default LoginForm;
+

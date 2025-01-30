@@ -1,5 +1,8 @@
-const Products_table = () => {
-  return <div>Products_table</div>;
-};
+// import ProductsTable from "@components/Table/Table";
 
-export default Products_table;
+function ProductsTable() {
+  return "ProductsTable";
+  // return <ProductsTable />;
+}
+
+export default ProductsTable;
