@@ -2,34 +2,29 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/sliceUser";
 import { useNavigate } from "react-router-dom";
-import {
-  TextField,
-  Button,
-  Container,
-  Paper,
-  Box,
-  CircularProgress,
-  InputAdornment,
-  IconButton,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useState } from "react";
+import { Container, Paper, Box } from "@mui/material";
+import { useEffect } from "react";
+import InputText from "../InputText/InputText";
+import InputPassword from "../InputPassword/InputPassword";
+import CustomButton from "../Buttons/CustomButton/CustomButton";
 
 const LoginForm = () => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.auth);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleTogglePassword = () => {
-    setShowPassword((prev) => !prev);
-  };
 
   const onSubmit = async (data) => {
     const result = await dispatch(loginUser(data));
@@ -45,50 +40,18 @@ const LoginForm = () => {
         <Box component='img' src='/logoForm.svg' alt='Logo' sx={{ mb: 8 }} />
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
+          <InputText
             label='User Name'
-            {...register("userName", { required: "User Name is required" })}
-            error={!!errors.userName}
-            helperText={errors.userName?.message}
+            name='userName'
+            register={register}
+            errors={errors}
             sx={{ mb: 5 }}
           />
-          <TextField
-            fullWidth
-            label='Password'
-            type={showPassword ? "text" : "password"}
-            {...register("password", { required: "Password is required" })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-            sx={{ mb: 8 }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <IconButton onClick={handleTogglePassword} edge='end'>
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+          <InputPassword register={register} errors={errors} sx={{ mb: 8 }} />
           {error && <Box sx={{ color: "red", mb: 2 }}>{error}</Box>}
-          <Button
-            fullWidth
-            type='submit'
-            variant='contained'
-            color='success'
-            disabled={loading}
-            sx={{
-              mt: 3,
-              mb: 3,
-              fontSize: "20px",
-              fontWeight: "600",
-              padding: "12px",
-              borderRadius: "6px",
-              textTransform: "none",
-            }}>
-            {loading ? <CircularProgress size={24} color='success' /> : "Login"}
-          </Button>
+          <CustomButton type='submit' loading={loading}>
+            Login
+          </CustomButton>
         </form>
       </Paper>
     </Container>
@@ -96,4 +59,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

@@ -1,135 +1,140 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import {
-//   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-//   Paper, Button, IconButton, TextField, Dialog, DialogActions, DialogContent,
-//   DialogTitle
-// } from "@mui/material";
-// import { Edit, Delete } from "@mui/icons-material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Container,
+  Typography,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { useState, useMemo } from "react";
 
-// const API_URL = "http://localhost:3000/products";
+const initialProducts = [
+  { id: 0, category: "PC", name: "Lenovo Y50-70", quantity: 5, price: 25000 },
+  { id: 1, category: "Clothes", name: "Nike M Nk Df Acd21", quantity: 22, price: 4000 },
+  { id: 2, category: "Plumbing", name: "CERSANIT MITO 17", quantity: 1337, price: 5000 },
+  { id: 3, category: "A", name: "A ", quantity: 1337, price: 5000 },
+  { id: 4, category: "B", name: "B ", quantity: 1337, price: 5000 },
+];
 
-// const ProductsTable = () => {
-//   const [products, setProducts] = useState([]);
-//   const [selectedProduct, setSelectedProduct] = useState(null);
-//   const [open, setOpen] = useState(false);
-//   const [formData, setFormData] = useState({ name: "", category: "", quantity: 0, price: 0 });
+const columns = [
+  { key: "category", label: "Category", isNumeric: false },
+  { key: "name", label: "Name", isNumeric: false },
+  { key: "quantity", label: "Quantity", isNumeric: true },
+  { key: "price", label: "Price (₴)", isNumeric: true },
+];
 
+const SortableTableHeader = ({ label, sortKey, isNumeric, sortConfig, onSort }) => {
+  const isActive = sortConfig.key === sortKey;
+  const direction =
+    isActive && sortConfig.direction === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />;
 
-//   useEffect(() => {
-//     fetchProducts();
-//   }, []);
+  return (
+    <TableCell sx={{ fontWeight: "bold", color: "white" }}>
+      {label}
+      <IconButton size='small' sx={{ color: "white" }} onClick={() => onSort(sortKey, isNumeric)}>
+        {direction}
+      </IconButton>
+    </TableCell>
+  );
+};
 
-//   const fetchProducts = async () => {
-//     try {
-//       const response = await axios.get(API_URL);
-//       setProducts(response.data);
-//     } catch (error) {
-//       console.error("Ошибка при загрузке товаров:", error);
-//     }
-//   };
+const ProductsTable = () => {
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
+  const handleSort = (key, isNumeric) => {
+    const newDirection = sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
+    setSortConfig({ key, direction: newDirection });
+  };
 
-//   const handleOpen = (product = null) => {
-//     setOpen(true);
-//     if (product) {
-//       setSelectedProduct(product);
-//       setFormData(product);
-//     } else {
-//       setSelectedProduct(null);
-//       setFormData({ name: "", category: "", quantity: 0, price: 0 });
-//     }
-//   };
+  const sortedProducts = useMemo(() => {
+    if (!sortConfig.key) return initialProducts;
 
+    return [...initialProducts].sort((a, b) => {
+      const valueA = a[sortConfig.key];
+      const valueB = b[sortConfig.key];
 
-//   const handleClose = () => setOpen(false);
+      if (typeof valueA === "number" && typeof valueB === "number") {
+        return sortConfig.direction === "asc" ? valueA - valueB : valueB - valueA;
+      } else if (typeof valueA === "string" && typeof valueB === "string") {
+        return sortConfig.direction === "asc"
+          ? valueA.localeCompare(valueB)
+          : valueB.localeCompare(valueA);
+      }
+      return 0;
+    });
+  }, [sortConfig]);
 
-//   // Обновление полей формыl
-//   const handleChange = (e) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value });
-//   };
+  return (
+    <Container>
+      <Typography
+        variant='h3'
+        sx={{ fontWeight: "bold", textAlign: "center", color: "white", marginBottom: 3 }}>
+        Products
+      </Typography>
+      <TableContainer component={Paper} sx={{ width: "90%", margin: "auto", boxShadow: 3 }}>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ backgroundColor: "#3BB143" }}>
+              <TableCell sx={{ fontWeight: "bold", color: "white" }}>ID</TableCell>
+              {columns.map(({ key, label, isNumeric }) => (
+                <SortableTableHeader
+                  key={key}
+                  label={label}
+                  sortKey={key}
+                  isNumeric={isNumeric}
+                  sortConfig={sortConfig}
+                  onSort={handleSort}
+                />
+              ))}
+              <TableCell sx={{ fontWeight: "bold", color: "white" }}></TableCell>
+            </TableRow>
+          </TableHead>
 
-//   // Добавление / редактирование товара
-//   const handleSubmit = async () => {
-//     if (selectedProduct) {
-//       // Редактирование товара
-//       await axios.put(`${API_URL}/${selectedProduct.id}`, formData);
-//     } else {
-//       // Добавление нового товара
-//       await axios.post(API_URL, { ...formData, id: Date.now() });
-//     }
-//     fetchProducts();
-//     handleClose();
-//   };
+          <TableBody>
+            {sortedProducts.map((product) => (
+              <TableRow
+                key={product.id}
+                onClick={() => setSelectedRow(product.id)}
+                sx={{
+                  backgroundColor: selectedRow === product.id ? "#A7E3A1" : "#E8E8E8",
+                  "&:hover": { backgroundColor: "#A7E3A1" },
+                  cursor: "pointer",
+                }}>
+                <TableCell>{product.id}</TableCell>
+                {columns.map(({ key }) => (
+                  <TableCell
+                    key={key}
+                    sx={{
+                      fontWeight: "bold",
+                      color: selectedRow === product.id ? "green" : "gray",
+                    }}>
+                    {key === "price" ? product[key].toLocaleString() + "₴" : product[key]}
+                  </TableCell>
+                ))}
+                <TableCell>
+                  <IconButton sx={{ color: "black" }}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton sx={{ color: "black" }}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
+  );
+};
 
-//   // Удаление товара
-//   const handleDelete = async (id) => {
-//     await axios.delete(`${API_URL}/${id}`);
-//     fetchProducts();
-//   };
-
-//   return (
-//     <TableContainer component={Paper} sx={{ maxWidth: 900, margin: "auto", mt: 5 }}>
-//       <Button variant="contained" color="success" sx={{ mb: 2 }} onClick={() => handleOpen()}>
-//         + Add Product
-//       </Button>
-
-//       <Table>
-//         <TableHead>
-//           <TableRow>
-//             <TableCell>ID</TableCell>
-//             <TableCell>Category</TableCell>
-//             <TableCell>Name</TableCell>
-//             <TableCell>Quantity</TableCell>
-//             <TableCell>Price ($)</TableCell>
-//             <TableCell>Actions</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {products.map((product) => (
-//             <TableRow
-//               key={product.id}
-//               sx={{
-//                 backgroundColor: selectedProduct?.id === product.id ? "#A8E6CF" : "inherit",
-//                 cursor: "pointer",
-//                 "&:hover": { backgroundColor: "#E8F5E9" }
-//               }}
-//               onClick={() => setSelectedProduct(product)}
-//             >
-//               <TableCell>{product.id}</TableCell>
-//               <TableCell>{product.category}</TableCell>
-//               <TableCell>{product.name}</TableCell>
-//               <TableCell>{product.quantity}</TableCell>
-//               <TableCell>{product.price}</TableCell>
-//               <TableCell>
-//                 <IconButton color="primary" onClick={() => handleOpen(product)}>
-//                   <Edit />
-//                 </IconButton>
-//                 <IconButton color="error" onClick={() => handleDelete(product.id)}>
-//                   <Delete />
-//                 </IconButton>
-//               </TableCell>
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-
-//       {/* Диалоговое окно для добавления / редактирования товара */}
-//       <Dialog open={open} onClose={handleClose}>
-//         <DialogTitle>{selectedProduct ? "Edit Product" : "Add Product"}</DialogTitle>
-//         <DialogContent>
-//           <TextField fullWidth label="Name" name="name" value={formData.name} onChange={handleChange} sx={{ mt: 2 }} />
-//           <TextField fullWidth label="Category" name="category" value={formData.category} onChange={handleChange} sx={{ mt: 2 }} />
-//           <TextField fullWidth label="Quantity" name="quantity" type="number" value={formData.quantity} onChange={handleChange} sx={{ mt: 2 }} />
-//           <TextField fullWidth label="Price" name="price" type="number" value={formData.price} onChange={handleChange} sx={{ mt: 2 }} />
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={handleClose} color="secondary">Cancel</Button>
-//           <Button onClick={handleSubmit} color="primary">{selectedProduct ? "Save" : "Add"}</Button>
-//         </DialogActions>
-//       </Dialog>
-//     </TableContainer>
-//   );
-// };
-
-// export default ProductsTable;
+export default ProductsTable;
