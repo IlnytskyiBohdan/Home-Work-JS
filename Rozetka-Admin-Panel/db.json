@@ -7,8 +7,88 @@
     }
   ],
   "products": [
-    { "id": 1, "category": "PC", "name": "Lenovo Y50-70", "quantity": 5, "price": 25000 },
-    { "id": 2, "category": "Clothes", "name": "Nike M Nk Df Acd21", "quantity": 22, "price": 4000 },
-    { "id": 3, "category": "Plumbing", "name": "CERSANIT MITO 17", "quantity": 1337, "price": 5000 }
+    {
+      "id": "b366",
+      "category": "laptop",
+      "name": "lenovo",
+      "quantity": "13",
+      "price": "1234",
+      "description": "",
+      "image": ""
+    },
+    {
+      "id": "ab4a",
+      "category": "uyghb",
+      "name": "123",
+      "quantity": "321",
+      "price": "423",
+      "description": "sdf",
+      "image": ""
+    },
+    {
+      "id": "6c9f",
+      "category": "wsdfs",
+      "name": "123ewq",
+      "quantity": "21321",
+      "price": "12321",
+      "description": "12312qdqds"
+    },
+    {
+      "id": "bbf2",
+      "category": "sdasd",
+      "name": "123",
+      "quantity": "123",
+      "price": "123",
+      "description": ""
+    },
+    {
+      "id": "4a10",
+      "category": "dwdde",
+      "name": "12213",
+      "quantity": "123",
+      "price": "123",
+      "description": ""
+    },
+    {
+      "id": "d78f",
+      "category": "qwe",
+      "name": "123",
+      "quantity": "123",
+      "price": "123",
+      "description": ""
+    },
+    {
+      "id": "e031",
+      "category": "sdf",
+      "name": "123",
+      "quantity": "123",
+      "price": "123",
+      "description": ""
+    },
+    {
+      "id": "a33d",
+      "category": "wefd",
+      "name": "123",
+      "quantity": "123",
+      "price": "321",
+      "description": ""
+    },
+    {
+      "id": "d7b3",
+      "category": "qwd",
+      "name": "123",
+      "quantity": "12",
+      "price": "123",
+      "description": ""
+    },
+    {
+      "id": "a3b4",
+      "category": "qwed",
+      "name": "123",
+      "quantity": "123",
+      "price": "123",
+      "image": "qwew",
+      "description": ""
+    }
   ]
 }

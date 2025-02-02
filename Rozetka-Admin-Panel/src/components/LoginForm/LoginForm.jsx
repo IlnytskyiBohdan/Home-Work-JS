@@ -35,7 +35,12 @@ const LoginForm = () => {
 
   return (
     <Container
-      sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
       <Paper sx={{ padding: 4, borderRadius: 3, textAlign: "center", width: 400 }}>
         <Box component='img' src='/logoForm.svg' alt='Logo' sx={{ mb: 8 }} />
 
