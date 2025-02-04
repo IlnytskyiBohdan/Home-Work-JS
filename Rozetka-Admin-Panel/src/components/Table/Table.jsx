@@ -104,18 +104,24 @@ const ProductsTable = () => {
       const valueA = a[sortConfig.key];
       const valueB = b[sortConfig.key];
 
-      if (typeof valueA === "number" && typeof valueB === "number") {
+      // Если оба значения - числа, сортируем числовым методом
+      if (!isNaN(valueA) && !isNaN(valueB)) {
         return sortConfig.direction === "asc" ? valueA - valueB : valueB - valueA;
-      } else {
-        return sortConfig.direction === "asc"
-          ? valueA.localeCompare(valueB)
-          : valueB.localeCompare(valueA);
       }
+
+      // Если строка, сортируем по алфавиту, но с учетом регистров и символов
+      return sortConfig.direction === "asc"
+        ? valueA
+            .toString()
+            .localeCompare(valueB.toString(), undefined, { numeric: true, sensitivity: "base" })
+        : valueB
+            .toString()
+            .localeCompare(valueA.toString(), undefined, { numeric: true, sensitivity: "base" });
     });
   }, [products, sortConfig]);
 
   const navigate = useNavigate();
-  const handlePreviewClick = () => navigate("/products-previee");
+  const handlePreviewClick = () => navigate("/products-preview");
 
   // Функция для открытия диалога
   const handleOpenDialog = (id) => {

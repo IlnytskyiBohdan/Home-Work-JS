@@ -4,17 +4,23 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
 import Layout from "./components/Layout/Layout";
 import NoteFound from "./components/NoteFound/NoteFound";
+import PrivateRoute from "./constants/privateRoute";
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path='*' element={<NoteFound />}></Route>
-          <Route path='/' element={<Layout />}>
-            {Object.values(routes).map(({ id, path, element }) => (
-              <Route key={id} path={path} element={element} />
-            ))}
+          <Route path="*" element={<NoteFound />} />
+          <Route path="/" element={<Layout />}>
+            <Route path={routes.login.path} element={routes.login.element} />
+            <Route element={<PrivateRoute />}>
+              {Object.values(routes)
+                .filter((route) => route.path !== "/login") // Защищаем только приватные маршруты
+                .map(({ id, path, element }) => (
+                  <Route key={id} path={path} element={element} />
+                ))}
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

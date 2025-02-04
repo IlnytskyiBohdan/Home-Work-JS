@@ -23,13 +23,7 @@ const CustomButton = ({
       sx={{
         fontSize: "20px",
         fontWeight: "600",
-        padding: "12px",
-        borderRadius: "6px",
         textTransform: "none",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "8px",
         ...sx,
       }}
       startIcon={startIcon}>

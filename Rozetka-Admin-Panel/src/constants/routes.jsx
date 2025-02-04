@@ -10,7 +10,7 @@ export const routes = {
   },
   products_table: {
     element: <ProductsPrevie />,
-    path: "/products-previee",
+    path: "/products-preview",
     id: 2,
   },
   products_previe: {

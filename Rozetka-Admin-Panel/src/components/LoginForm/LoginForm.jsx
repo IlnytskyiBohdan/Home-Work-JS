@@ -6,7 +6,7 @@ import { Container, Paper, Box } from "@mui/material";
 import { useEffect } from "react";
 import InputText from "../InputText/InputText";
 import InputPassword from "../InputPassword/InputPassword";
-import CustomButton from "../Buttons/CustomButton/CustomButton";
+import ButtonLogin from "../Buttons/ButtonLogin/ButtonLogin";
 
 const LoginForm = () => {
   useEffect(() => {
@@ -54,9 +54,7 @@ const LoginForm = () => {
           />
           <InputPassword register={register} errors={errors} sx={{ mb: 8 }} />
           {error && <Box sx={{ color: "red", mb: 2 }}>{error}</Box>}
-          <CustomButton type='submit' loading={loading}>
-            Login
-          </CustomButton>
+          <ButtonLogin loading={loading}></ButtonLogin>
         </form>
       </Paper>
     </Container>
