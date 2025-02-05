@@ -1,14 +1,9 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../redux/slices/sliceProducts";
 import { Container, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { selectProducts, selectProductStatus } from "../redux/selectors/selectors";
 import ProductCard from "../components/ProductCard/ProductCard";
 import ProductsButton from "../components/Buttons/ProductsButton/ProductsButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import useProducts from "../hooks/useProducts";
-
 
 const ProductsPreview = () => {
   const { products, status } = useProducts();
@@ -16,12 +11,6 @@ const ProductsPreview = () => {
   const navigate = useNavigate();
 
   const handleBackClick = () => navigate("/products-table");
-
-  // useEffect(() => {
-  //   if (products.length === 0) {
-  //     dispatch(fetchProducts());
-  //   }
-  // }, [dispatch, products.length]);
 
   if (status === "loading") return <Typography>Loading...</Typography>;
   if (status === "failed") return <Typography>Error loading products</Typography>;

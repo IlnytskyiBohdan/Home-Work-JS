@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Container, Paper, Box } from "@mui/material";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import InputText from "../InputText/InputText";
 import InputPassword from "../InputPassword/InputPassword";
 import ButtonLogin from "../Buttons/ButtonLogin/ButtonLogin";
 import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
 import useDisableScroll from "../../hooks/useDisableScroll";
 
 const LoginForm = () => {

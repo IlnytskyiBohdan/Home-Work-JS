@@ -12,23 +12,25 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { AccountCircle, Add } from "@mui/icons-material";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   fetchProducts,
   deleteProduct,
   addProduct,
   updateProduct,
 } from "../../redux/slices/sliceProducts";
+import { AccountCircle, Add } from "@mui/icons-material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteDialog from "../DeleteDialog/DeletDialog";
 import ProductForm from "../ProductForm/ProductForm";
 import useProducts from "../../hooks/useProducts";
 import useSortedProducts from "../../hooks/useSortedProducts";
 import SortableTableHeader from "../SortableTableHeader/SortableTableHeader";
 import ProductsButton from "../Buttons/ProductsButton/ProductsButton";
+
 
 const columns = [
   { key: "category", label: "Category", isNumeric: false },
@@ -38,7 +40,6 @@ const columns = [
 ];
 
 const ProductsTable = () => {
- 
   const { products, status, error } = useProducts();
   const { sortedProducts, handleSort, sortConfig } = useSortedProducts(products);
 
@@ -47,6 +48,8 @@ const ProductsTable = () => {
   const [productToDelete, setProductToDelete] = useState(null);
   const [openForm, setOpenForm] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const handlePreviewClick = () => navigate("/products-preview");
@@ -95,14 +98,13 @@ const ProductsTable = () => {
       </Box>
 
       <Typography
-        variant="h3"
-        sx={{ fontWeight: "bold", textAlign: "center", color: "white", marginBottom: 3 }}
-      >
+        variant='h3'
+        sx={{ fontWeight: "bold", textAlign: "center", color: "white", marginBottom: 3 }}>
         Products
       </Typography>
 
       {status === "loading" ? (
-        <CircularProgress color="success" sx={{ display: "block", margin: "auto" }} />
+        <CircularProgress color='success' sx={{ display: "block", margin: "auto" }} />
       ) : status === "failed" ? (
         <Typography sx={{ color: "red", textAlign: "center" }}>Error: {error}</Typography>
       ) : (
@@ -133,8 +135,7 @@ const ProductsTable = () => {
                     backgroundColor: selectedRow === product.id ? "#A7E3A1" : "#E8E8E8",
                     "&:hover": { backgroundColor: "#A7E3A1" },
                     cursor: "pointer",
-                  }}
-                >
+                  }}>
                   <TableCell>{product.id}</TableCell>
                   {columns.map(({ key }) => (
                     <TableCell key={key} sx={{ fontWeight: "bold", color: "gray" }}>
@@ -145,7 +146,9 @@ const ProductsTable = () => {
                     <IconButton sx={{ color: "black" }} onClick={() => handleOpenEditForm(product)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton sx={{ color: "black" }} onClick={() => handleOpenDialog(product.id)}>
+                    <IconButton
+                      sx={{ color: "black" }}
+                      onClick={() => handleOpenDialog(product.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -155,8 +158,17 @@ const ProductsTable = () => {
           </Table>
         </TableContainer>
       )}
-      <DeleteDialog open={openDialog} onClose={() => setOpenDialog(false)} onConfirm={handleDeleteConfirm} />
-      <ProductForm open={openForm} onClose={() => setOpenForm(false)} onSubmit={handleFormSubmit} product={productToEdit} />
+      <DeleteDialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+        onConfirm={handleDeleteConfirm}
+      />
+      <ProductForm
+        open={openForm}
+        onClose={() => setOpenForm(false)}
+        onSubmit={handleFormSubmit}
+        product={productToEdit}
+      />
     </Container>
   );
 };
