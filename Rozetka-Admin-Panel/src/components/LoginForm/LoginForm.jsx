@@ -1,20 +1,15 @@
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/slices/sliceUser";
-import { useNavigate } from "react-router-dom";
 import { Container, Paper, Box } from "@mui/material";
 import { useEffect } from "react";
 import InputText from "../InputText/InputText";
 import InputPassword from "../InputPassword/InputPassword";
 import ButtonLogin from "../Buttons/ButtonLogin/ButtonLogin";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import useDisableScroll from "../../hooks/useDisableScroll";
 
 const LoginForm = () => {
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, []);
+  useDisableScroll();
 
   const {
     register,
@@ -22,14 +17,17 @@ const LoginForm = () => {
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch();
+  const { loading, error, login } = useAuth();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
 
   const onSubmit = async (data) => {
-    const result = await dispatch(loginUser(data));
-    if (result.meta.requestStatus === "fulfilled") {
-      navigate("/products-table");
+    try {
+      const result = await login(data);
+      if (result.meta.requestStatus === "fulfilled") {
+        navigate("/products-table");
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
     }
   };
 
@@ -54,7 +52,7 @@ const LoginForm = () => {
           />
           <InputPassword register={register} errors={errors} sx={{ mb: 8 }} />
           {error && <Box sx={{ color: "red", mb: 2 }}>{error}</Box>}
-          <ButtonLogin loading={loading}></ButtonLogin>
+          <ButtonLogin loading={loading} />
         </form>
       </Paper>
     </Container>

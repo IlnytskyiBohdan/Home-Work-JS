@@ -14,13 +14,9 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import { useState, useMemo, useEffect } from "react";
-import ProductsButton from "../Buttons/ProductsButton/ProductsButton";
 import { AccountCircle, Add } from "@mui/icons-material";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import {
   fetchProducts,
   deleteProduct,
@@ -29,6 +25,10 @@ import {
 } from "../../redux/slices/sliceProducts";
 import DeleteDialog from "../DeleteDialog/DeletDialog";
 import ProductForm from "../ProductForm/ProductForm";
+import useProducts from "../../hooks/useProducts";
+import useSortedProducts from "../../hooks/useSortedProducts";
+import SortableTableHeader from "../SortableTableHeader/SortableTableHeader";
+import ProductsButton from "../Buttons/ProductsButton/ProductsButton";
 
 const columns = [
   { key: "category", label: "Category", isNumeric: false },
@@ -37,35 +37,19 @@ const columns = [
   { key: "price", label: "Price (₴)", isNumeric: true },
 ];
 
-const SortableTableHeader = ({ label, sortKey, isNumeric, sortConfig, onSort }) => {
-  const isActive = sortConfig.key === sortKey;
-  const direction =
-    isActive && sortConfig.direction === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />;
-
-  return (
-    <TableCell sx={{ fontWeight: "bold", color: "white" }}>
-      {label}
-      <IconButton size='small' sx={{ color: "white" }} onClick={() => onSort(sortKey, isNumeric)}>
-        {direction}
-      </IconButton>
-    </TableCell>
-  );
-};
-
 const ProductsTable = () => {
-  const dispatch = useDispatch();
-
-  const { items: products, status, error } = useSelector((state) => state.products);
+ 
+  const { products, status, error } = useProducts();
+  const { sortedProducts, handleSort, sortConfig } = useSortedProducts(products);
 
   const [selectedRow, setSelectedRow] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
   const [openDialog, setOpenDialog] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
-
   const [openForm, setOpenForm] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
 
+  const navigate = useNavigate();
+  const handlePreviewClick = () => navigate("/products-preview");
 
   const handleOpenAddForm = () => {
     setProductToEdit(null);
@@ -77,7 +61,6 @@ const ProductsTable = () => {
     setOpenForm(true);
   };
 
-
   const handleFormSubmit = (data) => {
     if (productToEdit) {
       dispatch(updateProduct({ ...productToEdit, ...data }));
@@ -87,47 +70,10 @@ const ProductsTable = () => {
     setOpenForm(false);
   };
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
-  const handleSort = (key) => {
-    const newDirection = sortConfig.key === key && sortConfig.direction === "asc" ? "desc" : "asc";
-    setSortConfig({ key, direction: newDirection });
-  };
-
-  const sortedProducts = useMemo(() => {
-    if (!sortConfig.key) return products || [];
-
-    return [...(products || [])].sort((a, b) => {
-      const valueA = a[sortConfig.key];
-      const valueB = b[sortConfig.key];
-
-  
-      if (!isNaN(valueA) && !isNaN(valueB)) {
-        return sortConfig.direction === "asc" ? valueA - valueB : valueB - valueA;
-      }
-
-  
-      return sortConfig.direction === "asc"
-        ? valueA
-            .toString()
-            .localeCompare(valueB.toString(), undefined, { numeric: true, sensitivity: "base" })
-        : valueB
-            .toString()
-            .localeCompare(valueA.toString(), undefined, { numeric: true, sensitivity: "base" });
-    });
-  }, [products, sortConfig]);
-
-  const navigate = useNavigate();
-  const handlePreviewClick = () => navigate("/products-preview");
-
-  
   const handleOpenDialog = (id) => {
     setProductToDelete(id);
     setOpenDialog(true);
   };
-
 
   const handleDeleteConfirm = async () => {
     if (productToDelete !== null) {
@@ -149,23 +95,18 @@ const ProductsTable = () => {
       </Box>
 
       <Typography
-        variant='h3'
-        sx={{ fontWeight: "bold", textAlign: "center", color: "white", marginBottom: 3 }}>
+        variant="h3"
+        sx={{ fontWeight: "bold", textAlign: "center", color: "white", marginBottom: 3 }}
+      >
         Products
       </Typography>
 
       {status === "loading" ? (
-        <CircularProgress color='success' sx={{ display: "block", margin: "auto" }} />
+        <CircularProgress color="success" sx={{ display: "block", margin: "auto" }} />
       ) : status === "failed" ? (
         <Typography sx={{ color: "red", textAlign: "center" }}>Error: {error}</Typography>
       ) : (
-        <TableContainer
-          component={Paper}
-          sx={{
-            width: "90%",
-            margin: "auto",
-            boxShadow: 3,
-          }}>
+        <TableContainer component={Paper} sx={{ width: "90%", margin: "auto", boxShadow: 3 }}>
           <Table>
             <TableHead>
               <TableRow sx={{ backgroundColor: "#3BB143" }}>
@@ -192,15 +133,11 @@ const ProductsTable = () => {
                     backgroundColor: selectedRow === product.id ? "#A7E3A1" : "#E8E8E8",
                     "&:hover": { backgroundColor: "#A7E3A1" },
                     cursor: "pointer",
-                  }}>
+                  }}
+                >
                   <TableCell>{product.id}</TableCell>
                   {columns.map(({ key }) => (
-                    <TableCell
-                      key={key}
-                      sx={{
-                        fontWeight: "bold",
-                        color: selectedRow === product.id ? "green" : "gray",
-                      }}>
+                    <TableCell key={key} sx={{ fontWeight: "bold", color: "gray" }}>
                       {key === "price" ? product[key].toLocaleString() + "₴" : product[key]}
                     </TableCell>
                   ))}
@@ -208,29 +145,18 @@ const ProductsTable = () => {
                     <IconButton sx={{ color: "black" }} onClick={() => handleOpenEditForm(product)}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton
-                      sx={{ color: "black" }}
-                      onClick={() => handleOpenDialog(product.id)}>
+                    <IconButton sx={{ color: "black" }} onClick={() => handleOpenDialog(product.id)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
-            <DeleteDialog
-              open={openDialog}
-              onClose={() => setOpenDialog(false)}
-              onConfirm={handleDeleteConfirm}
-            />
-            <ProductForm
-              open={openForm}
-              onClose={() => setOpenForm(false)}
-              onSubmit={handleFormSubmit}
-              product={productToEdit}
-            />
           </Table>
         </TableContainer>
       )}
+      <DeleteDialog open={openDialog} onClose={() => setOpenDialog(false)} onConfirm={handleDeleteConfirm} />
+      <ProductForm open={openForm} onClose={() => setOpenForm(false)} onSubmit={handleFormSubmit} product={productToEdit} />
     </Container>
   );
 };

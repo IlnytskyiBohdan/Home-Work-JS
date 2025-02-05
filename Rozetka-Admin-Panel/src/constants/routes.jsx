@@ -1,5 +1,5 @@
-import Login from "../pages/Login/";
-import ProductsPrevie from "../pages/ProductsPrevie";
+import Login from "../pages/Login";
+import ProductsPreiew from "../pages/ProductsPreview";
 import ProductsTable from "../pages/ProductsTable";
 
 export const routes = {
@@ -9,7 +9,7 @@ export const routes = {
     id: 1,
   },
   products_table: {
-    element: <ProductsPrevie />,
+    element: <ProductsPreiew />,
     path: "/products-preview",
     id: 2,
   },

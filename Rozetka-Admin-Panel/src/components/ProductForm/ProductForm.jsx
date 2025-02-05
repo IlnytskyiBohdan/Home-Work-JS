@@ -4,6 +4,8 @@ import CustomButton from "../Buttons/CustomButton/CustomButton";
 import InputText from "../InputText/InputText";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
+import InputFile from "../InputFile/InputFile";
+import validationRules from "../rules/validationRules";
 
 const ProductForm = ({ open, onClose, onSubmit, product }) => {
   const {
@@ -14,18 +16,15 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
   } = useForm();
 
   useEffect(() => {
-    if (product) {
-      reset(product);
-    } else {
-      reset({
+    reset(
+      product || {
         category: "",
         name: "",
         quantity: "",
         price: "",
-        image: "",
         description: "",
-      });
-    }
+      }
+    );
   }, [open, product, reset]);
 
   return (
@@ -53,13 +52,7 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
           register={register}
           errors={errors}
           sx={{ mb: 2 }}
-          validation={{
-            required: "Category is required",
-            pattern: {
-              value: /^[a-zA-Zа-яА-ЯёЁ\s]+$/,
-              message: "Only letters are allowed",
-            },
-          }}
+          validation={validationRules.category}
         />
         <InputText
           label='Name'
@@ -67,13 +60,7 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
           register={register}
           errors={errors}
           sx={{ mb: 2 }}
-          validation={{
-            required: "Name is required",
-            pattern: {
-              value: /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]*$/,
-              message: "Invalid characters in description",
-            },
-          }}
+          validation={validationRules.name}
         />
         <InputText
           label='Quantity'
@@ -81,13 +68,7 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
           register={register}
           errors={errors}
           sx={{ mb: 2 }}
-          validation={{
-            required: "Quantity is required",
-            pattern: {
-              value: /^\d+$/,
-              message: "Only numbers are allowed",
-            },
-          }}
+          validation={validationRules.quantity}
         />
         <InputText
           label='Price'
@@ -95,43 +76,26 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
           register={register}
           errors={errors}
           sx={{ mb: 2 }}
-          validation={{
-            required: "Quantity is required",
-            pattern: {
-              value: /^\d+$/,
-              message: "Only numbers are allowed",
-            },
-          }}
+          validation={validationRules.price}
         />
-        <InputText
-          label='Image'
-          name='image'
-          register={register}
-          errors={errors}
-          sx={{ mb: 2 }}
-          type='file'
-        />
+
+        <InputFile label='Upload Image' sx={{ mb: 2 }} />
+
         <InputText
           label='Description'
           name='description'
           register={register}
-          errors={!errors}
+          errors={errors}
           sx={{ mb: 2 }}
           multiline
           minRows={4}
-          validation={{
-            pattern: {
-              value: /^[a-zA-Zа-яА-ЯёЁ0-9\s.,!?-]*$/,
-              message: "Invalid characters in description",
-            },
-          }}
+          validation={validationRules.description}
         />
       </DialogContent>
 
       <DialogActions
         sx={{ justifyContent: "center", backgroundColor: "#E0E0E0", paddingBottom: 3 }}>
         <CustomButton
-          variant='contained'
           color='inherit'
           onClick={onClose}
           sx={{ backgroundColor: "#8D8D8D", color: "white", width: 160 }}>
@@ -139,7 +103,6 @@ const ProductForm = ({ open, onClose, onSubmit, product }) => {
         </CustomButton>
         <CustomButton
           type='submit'
-          variant='contained'
           color='success'
           onClick={handleSubmit(onSubmit)}
           sx={{ width: 160 }}>

@@ -13,8 +13,7 @@
       "name": "lenovo",
       "quantity": "13",
       "price": "1234",
-      "description": "",
-      "image": ""
+      "description": ""
     },
     {
       "id": "83a7",
@@ -22,7 +21,6 @@
       "name": "iPhone",
       "quantity": "3",
       "price": "353",
-      "image": "",
       "description": ""
     },
     {
@@ -31,7 +29,6 @@
       "name": "Samsung",
       "quantity": "12",
       "price": "945",
-      "image": "",
       "description": ""
     },
     {
@@ -40,7 +37,6 @@
       "name": "Ipad Mini",
       "quantity": "31",
       "price": "894",
-      "image": "",
       "description": ""
     },
     {
@@ -49,7 +45,22 @@
       "name": "sadcc123",
       "quantity": "123",
       "price": "123",
-      "image": "",
+      "description": ""
+    },
+    {
+      "id": "6684",
+      "category": "qwe",
+      "name": "qwe",
+      "quantity": "123",
+      "price": "345",
+      "description": ""
+    },
+    {
+      "id": "2455",
+      "category": "qwed",
+      "name": "12",
+      "quantity": "52",
+      "price": "52",
       "description": ""
     }
   ]
