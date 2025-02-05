@@ -66,19 +66,18 @@ const ProductsTable = () => {
   const [openForm, setOpenForm] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
 
-  // Открыть форму для добавления
+
   const handleOpenAddForm = () => {
     setProductToEdit(null);
     setOpenForm(true);
   };
 
-  // Открыть форму для редактирования
   const handleOpenEditForm = (product) => {
     setProductToEdit(product);
     setOpenForm(true);
   };
 
-  // Обработчик отправки формы
+
   const handleFormSubmit = (data) => {
     if (productToEdit) {
       dispatch(updateProduct({ ...productToEdit, ...data }));
@@ -104,12 +103,12 @@ const ProductsTable = () => {
       const valueA = a[sortConfig.key];
       const valueB = b[sortConfig.key];
 
-      // Если оба значения - числа, сортируем числовым методом
+  
       if (!isNaN(valueA) && !isNaN(valueB)) {
         return sortConfig.direction === "asc" ? valueA - valueB : valueB - valueA;
       }
 
-      // Если строка, сортируем по алфавиту, но с учетом регистров и символов
+  
       return sortConfig.direction === "asc"
         ? valueA
             .toString()
@@ -123,13 +122,13 @@ const ProductsTable = () => {
   const navigate = useNavigate();
   const handlePreviewClick = () => navigate("/products-preview");
 
-  // Функция для открытия диалога
+  
   const handleOpenDialog = (id) => {
     setProductToDelete(id);
     setOpenDialog(true);
   };
 
-  // Функция для удаления продукта
+
   const handleDeleteConfirm = async () => {
     if (productToDelete !== null) {
       await dispatch(deleteProduct(productToDelete));
@@ -141,12 +140,12 @@ const ProductsTable = () => {
   return (
     <Container>
       <Box sx={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
-        <ProductsButton
-          label='Preview'
-          startIcon={<AccountCircle />}
-          onClick={handlePreviewClick}
-        />
-        <ProductsButton label='Add product' startIcon={<Add />} onClick={handleOpenAddForm} />
+        <ProductsButton startIcon={<AccountCircle />} onClick={handlePreviewClick}>
+          Preview
+        </ProductsButton>
+        <ProductsButton startIcon={<Add />} onClick={handleOpenAddForm}>
+          Add product
+        </ProductsButton>
       </Box>
 
       <Typography

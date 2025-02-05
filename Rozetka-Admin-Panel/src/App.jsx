@@ -16,7 +16,7 @@ function App() {
             <Route path={routes.login.path} element={routes.login.element} />
             <Route element={<PrivateRoute />}>
               {Object.values(routes)
-                .filter((route) => route.path !== "/login") // Защищаем только приватные маршруты
+                .filter((route) => route.path !== "/login") 
                 .map(({ id, path, element }) => (
                   <Route key={id} path={path} element={element} />
                 ))}

@@ -5,7 +5,6 @@ const InputText = ({ label, name, register, errors, sx, validation, multiline, m
     <TextField
       fullWidth
       label={label}
-      // {...register(name, { required: `${label} is required` })}
       error={!!errors[name]}
       helperText={errors[name]?.message}
       sx={{ ...sx }}

@@ -1,10 +1,9 @@
 import CustomButton from "../CustomButton/CustomButton";
 
-const ProductsButton = ({ label, startIcon, onClick }) => {
+const ProductsButton = ({ children, startIcon, onClick, sx = {} }) => {
   return (
     <CustomButton
       color='inherit'
-      variant='contained'
       onClick={onClick}
       startIcon={startIcon}
       sx={{
@@ -13,8 +12,9 @@ const ProductsButton = ({ label, startIcon, onClick }) => {
         width: "200px",
         height: "50px",
         "&:hover": { backgroundColor: "#f5f5f5" },
+        ...sx,
       }}>
-      {label}
+      {children}
     </CustomButton>
   );
 };

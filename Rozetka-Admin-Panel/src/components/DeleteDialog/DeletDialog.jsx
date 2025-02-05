@@ -9,7 +9,6 @@ const DeleteDialog = ({ open, onClose, onConfirm }) => {
       </DialogTitle>
       <DialogActions sx={{ justifyContent: "center", paddingBottom: 3 }}>
         <CustomButton
-          variant='contained'
           color='inherit'
           onClick={onClose}
           sx={{ backgroundColor: "#E0E0E0", color: "black", width: "120px" }}>

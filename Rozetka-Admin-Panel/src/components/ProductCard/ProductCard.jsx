@@ -4,15 +4,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const ProductCard = ({ product }) => {
   return (
     <Card sx={{ backgroundColor: "white", padding: 2, boxShadow: 3, textAlign: "center" }}>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <img
-          src='/lenovo-laptop-y50.png'
-          alt={product.name}
-          style={{ width: "100%", maxHeight: "200px" }}
-        />
-      </Box>
+      <img
+        src='/lenovo-laptop-y50.png'
+        alt={product.name}
+        style={{ width: "100%", maxHeight: "200px" }}
+      />
+
       <CardContent>
-        <Typography variant='h6' fontWeight='bold' align='center'>
+        <Typography variant='h6' fontWeight='bold'>
           {product.name}
         </Typography>
 
@@ -23,10 +22,10 @@ const ProductCard = ({ product }) => {
             paddingTop: 5,
             paddingBottom: 2,
           }}>
-          <Typography variant='h5' color='error' fontWeight='bold' align='center'>
+          <Typography variant='h5' color='error' fontWeight='bold'>
             {product.price}₴
           </Typography>
-          <Typography align='center'>Кількість: {product.quantity}</Typography>
+          <Typography>Кількість: {product.quantity}</Typography>
         </Box>
 
         <Button color='success' sx={{ fontWeight: "bold" }}>
