@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 import CustomButton from "../Buttons/CustomButton/CustomButton";
 
 const DeleteDialog = ({ open, onClose, onConfirm }) => {

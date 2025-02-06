@@ -1,6 +1,17 @@
 import { TextField } from "@mui/material";
 
-const InputText = ({ label, name, register, errors, sx, validation, multiline, minRows }) => {
+const InputText = ({
+  label,
+  name,
+  register,
+  errors,
+  sx,
+  validation,
+  multiline,
+  minRows,
+  InputProps,
+  type,
+}) => {
   return (
     <TextField
       fullWidth
@@ -11,6 +22,8 @@ const InputText = ({ label, name, register, errors, sx, validation, multiline, m
       {...register(name, validation)}
       multiline={multiline}
       minRows={multiline ? minRows : undefined}
+      type={type}
+      InputProps={InputProps}
     />
   );
 };
